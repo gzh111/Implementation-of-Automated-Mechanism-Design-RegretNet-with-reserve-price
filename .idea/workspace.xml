@@ -4,6 +4,10 @@
     <list default="true" id="beb0318b-45d6-49ed-a4f1-b25c710c33e8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/regretnet/regretnet.py" beforeDir="false" afterPath="$PROJECT_DIR$/regretnet/regretnet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/2x2_softmax_in_scratch/events.out.tfevents.1647589674.LAPTOP-C5H6H6CE.11120.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/2x2_softmax_in_scratch/events.out.tfevents.1647589723.LAPTOP-C5H6H6CE.31792.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/2x2_softmax_in_scratch/events.out.tfevents.1647677151.LAPTOP-C5H6H6CE.10476.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/train.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,6 +58,9 @@
       <module name="RegretNet" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -128,6 +135,7 @@
       <workItem from="1646982249706" duration="5445000" />
       <workItem from="1647261300919" duration="6579000" />
       <workItem from="1647399150282" duration="38601000" />
+      <workItem from="1647780415652" duration="840000" />
     </task>
     <servers />
   </component>

@@ -451,7 +451,7 @@ def train_loop(
 ):
     regret_mults = 5.0 * torch.ones((1, model.n_agents)).to(device)
     ir_lagr_mults = 20.0 * torch.ones((1, model.n_agents)).to(device)
-    rp_lagr_mults = 20.0 * torch.ones((1, model.n_agents)).to(device)
+    rp_lagr_mults = -20.0 * torch.ones((1, model.n_agents)).to(device)
     payment_mult = 1.0
 
     optimizer = optim.Adam(model.parameters(), lr=args.model_lr)

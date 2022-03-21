@@ -323,12 +323,12 @@ def tiled_misreport_util(current_misreports, current_valuations, model):
     # agent_utils size [-1, n_agents]
     return agent_utils
 
-def calc_rp_loss(model, payments, reserved_price, rp_lagr_mults, rho):
+def calc_rp_loss(model, payments, rp_limit, rp_lagr_mults, rho):
     # 构建mask计算所有情况下的求和
     mask = torch.ones(
         (1, model.n_agents), device=payments.device)
-    RELU_layer = torch.nn.ReLU()
-    max_rp_operator = RELU_layer(rp_lagr_mults + rho * (payments - reserved_price))
+    ReLU_layer = torch.nn.ReLU()
+    max_rp_operator = ReLU_layer(rp_lagr_mults + rho * (payments - rp_limit))
     rp_decomposed = max_rp_operator**2 - rp_lagr_mults**2
     rp_loss = (mask * rp_decomposed).mean()
     return rp_loss
@@ -451,7 +451,7 @@ def train_loop(
 ):
     regret_mults = 5.0 * torch.ones((1, model.n_agents)).to(device)
     ir_lagr_mults = 20.0 * torch.ones((1, model.n_agents)).to(device)
-    rp_lagr_mults = -20.0 * torch.ones((1, model.n_agents)).to(device)
+    rp_lagr_mults = 20.0 * torch.ones((1, model.n_agents)).to(device)
     payment_mult = 1.0
 
     optimizer = optim.Adam(model.parameters(), lr=args.model_lr)
@@ -492,7 +492,7 @@ def train_loop(
 
             # 计算losses
             ir_loss = (ir_lagr_mults *(torch.abs(ir_violation)**args.ir_penalty_power)).mean()
-            rp_loss = calc_rp_loss(model, payments, reserved_price, rp_lagr_mults, rho)
+            rp_loss = calc_rp_loss(model, payments, rp_limit, rp_lagr_mults, rho)
 
             payment_loss = payments.sum(dim=1).mean() * payment_mult
 
@@ -517,6 +517,7 @@ def train_loop(
             if iter % lagr_update_iter_rp == 0:
                 with torch.no_grad():
                     rp_lagr_mults += rho * torch.mean(torch.maximum(payments, -(rp_lagr_mults_tensor/rho_tensor)), dim=0)
+                    print(rp_lagr_mults)
             if iter % args.rho_incr_iter == 0:
                 rho += args.rho_incr_amount
             if iter % args.rho_incr_iter_ir == 0:

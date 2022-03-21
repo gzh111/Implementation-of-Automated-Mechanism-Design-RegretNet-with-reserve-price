@@ -500,7 +500,7 @@ def train_loop(
                         + (rho / 2.0) * torch.mean(quadratic_regrets) \
                         + ir_loss\
                         - payment_loss\
-                        + rp_loss
+                        + (1.0 / 2.0 * rho) * rp_loss
 
             # 更新网络参数
             optimizer.zero_grad()
@@ -516,7 +516,7 @@ def train_loop(
                     ir_lagr_mults += rho_ir * torch.mean(torch.abs(ir_violation))
             if iter % lagr_update_iter_rp == 0:
                 with torch.no_grad():
-                    rp_lagr_mults += rho * torch.mean(torch.maximum(payments, -(rp_lagr_mults_tensor/rho_tensor)), dim=0)
+                    rp_lagr_mults += rho * torch.mean(torch.max(payments, -(rp_lagr_mults_tensor/rho_tensor)), dim=0)
                     print(rp_lagr_mults)
             if iter % args.rho_incr_iter == 0:
                 rho += args.rho_incr_amount

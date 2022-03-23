@@ -525,7 +525,7 @@ def train_loop(
                     ir_lagr_mults += rho_ir * torch.mean(torch.abs(ir_violation))
             if iter % lagr_update_iter_rp == 0:
                 with torch.no_grad():
-                    rp_lagr_mults += rho * torch.mean(torch.max(payments, -(rp_lagr_mults_tensor/rho_tensor)), dim=0)
+                    rp_lagr_mults += rho * torch.mean(torch.max(rp_limit - payments, -(rp_lagr_mults_tensor/rho_tensor)), dim=0)
             if iter % args.rho_incr_iter == 0:
                 rho += args.rho_incr_amount
             if iter % args.rho_incr_iter_ir == 0:

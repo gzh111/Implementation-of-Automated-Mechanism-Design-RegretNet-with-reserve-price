@@ -333,7 +333,7 @@ def calc_rp_loss(model, payments, rp_limit, rp_lagr_mults, rho):
     # max_rp_operator = ReLU_layer(rp_lagr_mults + rho * (payments - rp_limit))
     max_rp_operator = torch.max(edge, rp_lagr_mults + rho * (payments - rp_limit))
     rp_decomposed = max_rp_operator**2 - rp_lagr_mults**2
-    rp_loss = (mask * rp_decomposed).mean()
+    rp_loss = mask * rp_decomposed.sum(dim = 0)
     return rp_loss
 
 def test_loop(

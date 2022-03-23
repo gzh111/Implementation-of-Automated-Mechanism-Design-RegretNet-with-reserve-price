@@ -327,13 +327,14 @@ def calc_rp_loss(model, payments, rp_limit, rp_lagr_mults, rho):
     # 构建mask计算所有情况下的求和
     mask = torch.ones(
         (1, model.n_agents), device = payments.device)
-    edge = torch.zeros(
-        (1, model.n_agents), device = payments.device)
-    # ReLU_layer = torch.nn.ReLU()
-    # max_rp_operator = ReLU_layer(rp_lagr_mults + rho * (payments - rp_limit))
-    max_rp_operator = torch.max(edge, rp_lagr_mults + rho * (payments - rp_limit))
+    # edge = torch.zeros(
+    #     (1, model.n_agents), device = payments.device)
+    ReLU_layer = torch.nn.ReLU()
+    max_rp_operator = ReLU_layer(rp_lagr_mults + rho * (payments - rp_limit))
+    # max_rp_operator = torch.max(edge, rp_lagr_mults + rho * (payments - rp_limit))
     rp_decomposed = max_rp_operator**2 - rp_lagr_mults**2
-    rp_loss = (mask * rp_decomposed.sum(dim = 0)).sum(dim = 1)
+    # rp_loss = (mask * rp_decomposed.sum(dim = 0)).sum(dim = 1)
+    rp_loss = rp_decomposed.sum(dim=1).mean()
     return rp_loss
 
 def test_loop(
@@ -454,7 +455,7 @@ def train_loop(
 ):
     regret_mults = 5.0 * torch.ones((1, model.n_agents)).to(device)
     ir_lagr_mults = 20.0 * torch.ones((1, model.n_agents)).to(device)
-    rp_lagr_mults = 100.0 * torch.ones((1, model.n_agents)).to(device)
+    rp_lagr_mults = 20.0 * torch.ones((1, model.n_agents)).to(device)
     payment_mult = 1.0
 
     optimizer = optim.Adam(model.parameters(), lr=args.model_lr)

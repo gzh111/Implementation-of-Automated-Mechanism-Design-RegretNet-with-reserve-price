@@ -327,7 +327,7 @@ def calc_rp_loss(model, payments, rp_limit, rp_lagr_mults, rho):
     # 构建mask计算所有情况下的求和
     mask = torch.ones(
         (1, model.n_agents), device = payments.device)
-    edge = torch.ones(
+    edge = torch.zeros(
         (1, model.n_agents), device = payments.device)
     # ReLU_layer = torch.nn.ReLU()
     # max_rp_operator = ReLU_layer(rp_lagr_mults + rho * (payments - rp_limit))

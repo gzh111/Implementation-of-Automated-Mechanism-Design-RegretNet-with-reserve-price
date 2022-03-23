@@ -455,7 +455,7 @@ def train_loop(
 ):
     regret_mults = 5.0 * torch.ones((1, model.n_agents)).to(device)
     ir_lagr_mults = 20.0 * torch.ones((1, model.n_agents)).to(device)
-    rp_lagr_mults = 5.0 * torch.ones((1, model.n_agents)).to(device)
+    rp_lagr_mults = 40.0 * torch.ones((1, model.n_agents)).to(device)
     payment_mult = 1.0
 
     optimizer = optim.Adam(model.parameters(), lr=args.model_lr)
@@ -561,13 +561,12 @@ def train_loop(
         writer.add_scalars('train/stat/ir_violation',
                            {"max": ir_violation.max(), "min": ir_violation.min(), "mean": ir_violation.mean()},
                            global_step=epoch)
-        writer.add_scalars('train/stat/rp_violation',
-                           {"max": rp_violation.max(), "min": rp_violation.min(), "mean": ir_violation.mean()},
-                           global_step=epoch)
+        # writer.add_scalars('train/stat/rp_violation',
+        #                    {"max": rp_violation.max(), "min": rp_violation.min(), "mean": ir_violation.mean()},
+        #                    global_step=epoch)
         writer.add_scalars('loss', {"regret": regret_loss,
-                                    "payment": -payment_loss,
-                                    "ir_violation": ir_loss,
-                                    "rp_violation": rp_loss
+                                    "payment": payment_loss,
+                                    "ir_violation": ir_loss
                                     }, global_step=epoch)
 
         writer.add_scalars('multiplier', {"regret": regret_mults.mean(),

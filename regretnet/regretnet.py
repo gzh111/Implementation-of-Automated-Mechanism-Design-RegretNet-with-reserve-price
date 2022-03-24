@@ -333,8 +333,8 @@ def calc_rp_loss(model, payments, rp_limit, rp_lagr_mults, rho):
     # max_rp_operator = ReLU_layer(rp_lagr_mults + rho * (rp_limit - payments))
     max_rp_operator = torch.max(edge, rp_lagr_mults + rho * (rp_limit - payments))
     rp_decomposed = max_rp_operator**2 - rp_lagr_mults**2
-    # rp_loss = (mask * rp_decomposed.sum(dim = 0)).sum(dim = 1)
-    rp_loss = rp_decomposed.sum(dim=1).mean()
+    rp_loss = (mask * rp_decomposed.sum(dim = 0)).sum(dim = 1)
+    # rp_loss = rp_decomposed.sum(dim=1).mean()
     return rp_loss
 
 def test_loop(
@@ -561,9 +561,9 @@ def train_loop(
         writer.add_scalars('train/stat/ir_violation',
                            {"max": ir_violation.max(), "min": ir_violation.min(), "mean": ir_violation.mean()},
                            global_step=epoch)
-        # writer.add_scalars('train/stat/rp_violation',
-        #                    {"max": rp_violation.max(), "min": rp_violation.min(), "mean": ir_violation.mean()},
-        #                    global_step=epoch)
+        writer.add_scalars('train/stat/rp_violation',
+                           {"max": rp_loss.max(), "min": rp_loss.min(), "mean": rp_loss.mean()},
+                           global_step=epoch)
         writer.add_scalars('loss', {"regret": regret_loss,
                                     "payment": payment_loss,
                                     "ir_violation": ir_loss,

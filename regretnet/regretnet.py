@@ -427,6 +427,8 @@ def test_loop(
     result = {"payment": total_payment / n_count,
               "payment_ir_adjusted": total_payment_ir_adjusted / n_count,
               "payment_ir_adjusted_std": (total_payment_ir_adjusted_sq / n_count - (total_payment_ir_adjusted/n_count)**2)**.5,
+              "payment_rp_adjusted": total_payment_rp_adjusted / n_count,
+              "payment_rp_adjusted_std": (total_payment_rp_adjusted_sq / n_count - (total_payment_rp_adjusted/n_count)**2)**.5,
               "regret_std": (total_regret_sq/n_count - (total_regret/n_count)**2)**.5,
               "regret_mean": total_regret/n_count,
               "regret_max": regret_max,

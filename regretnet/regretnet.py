@@ -259,7 +259,7 @@ def create_misreports_bound(valuations, eps=.1):
 
 
 def optimize_misreports(
-    model, current_valuations, current_misreports, misreport_iter=40, lr=1e-1
+    model, current_valuations, current_misreports, misreport_iter=50, lr=2.5e-2
 ):
     # misreports 和 valuations 的tensor大小相同，初始结果也相同
 
@@ -419,7 +419,7 @@ def test_loop(
         if ir_violation_max < torch.clamp_min(payments - payments_limit, 0).max():
             ir_violation_max = torch.clamp_min(payments - payments_limit, 0).max().item()
         if rp_violation_max < torch.clamp_min(rp_limit - payments, 0).max():
-            rp_violation_max =torch.clamp_min(rp_limit - payments, 0).max().item()
+            rp_violation_max = torch.clamp_min(rp_limit - payments, 0).max().item()
         if regret_max < torch.clamp_min(regrets, 0).max():
             regret_max = torch.clamp_min(regrets, 0).max().item()
         payment_list.append(total_payment/n_count)

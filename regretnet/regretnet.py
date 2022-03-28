@@ -387,7 +387,7 @@ def test_loop(
         payments_adj = torch.where(payments_limit>=payments,
                                    payments,
                                    torch.tensor(0.).to(device))
-        rp_adj = torch.where(rp_limit <= payments,
+        rp_adj = torch.where(rp_limit <= payments_adj,
                              payments,
                              torch.tensor(0.).to(device))
 

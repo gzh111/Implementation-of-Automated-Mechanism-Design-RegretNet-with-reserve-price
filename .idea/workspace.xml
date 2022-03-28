@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="beb0318b-45d6-49ed-a4f1-b25c710c33e8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/regretnet/regretnet.py" beforeDir="false" afterPath="$PROJECT_DIR$/regretnet/regretnet.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,7 +155,7 @@
       <workItem from="1647399150282" duration="38601000" />
       <workItem from="1647780415652" duration="32815000" />
       <workItem from="1648367672131" duration="2077000" />
-      <workItem from="1648431205982" duration="2663000" />
+      <workItem from="1648431205982" duration="3412000" />
     </task>
     <servers />
   </component>

@@ -491,6 +491,8 @@ def train_loop(
             positive_regrets = torch.clamp_min(regrets, 0)
             quadratic_regrets = positive_regrets ** 2
             regret_loss = (regret_mults * positive_regrets).mean()
+            regret_mean = positive_regrets.mean()
+
 
             ir_violation = -torch.clamp(truthful_util, max=0)
             rp_violation = -torch.clamp(payments - rp_limit, max=0)
@@ -565,7 +567,7 @@ def train_loop(
         writer.add_scalars('train/stat/rp_violation',
                            {"max": rp_violation.max(), "min": rp_violation.min(), "mean": rp_violation.mean()},
                            global_step=epoch)
-        writer.add_scalars('loss', {"regret": regret_loss,
+        writer.add_scalars('loss', {"regret": regret_mean,
                                     "payment": payment_loss,
                                     "ir_violation": ir_loss,
                                     "rp_violation": rp_loss

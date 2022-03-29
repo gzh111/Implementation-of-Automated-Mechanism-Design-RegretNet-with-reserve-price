@@ -259,7 +259,7 @@ def create_misreports_bound(valuations, eps=.1):
 
 
 def optimize_misreports(
-    model, current_valuations, current_misreports, misreport_iter=20, lr=5e-2
+    model, current_valuations, current_misreports, misreport_iter=10, lr=1e-1
 ):
     # misreports 和 valuations 的tensor大小相同，初始结果也相同
 

@@ -259,7 +259,7 @@ def create_misreports_bound(valuations, eps=.1):
 
 
 def optimize_misreports(
-    model, current_valuations, current_misreports, misreport_iter=50, lr=2.5e-2
+    model, current_valuations, current_misreports, misreport_iter=20, lr=5e-2
 ):
     # misreports 和 valuations 的tensor大小相同，初始结果也相同
 
@@ -456,7 +456,7 @@ def train_loop(
 ):
     regret_mults = 5.0 * torch.ones((1, model.n_agents)).to(device)
     ir_lagr_mults = 20.0 * torch.ones((1, model.n_agents)).to(device)
-    rp_lagr_mults = 40.0 * torch.ones((1, model.n_agents)).to(device)
+    rp_lagr_mults = 20.0 * torch.ones((1, model.n_agents)).to(device)
     payment_mult = 1.0
 
     optimizer = optim.Adam(model.parameters(), lr=args.model_lr)

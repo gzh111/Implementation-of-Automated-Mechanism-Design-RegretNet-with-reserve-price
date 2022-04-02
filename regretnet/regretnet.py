@@ -468,6 +468,7 @@ def train_loop(
     lagr_update_iter_ir = args.lagr_update_iter_ir
     lagr_update_iter_rp = args.lagr_update_iter_rp
     rho = args.rho
+    rho_ir = args.rho_ir
 
     for epoch in tqdm(range(args.num_epochs)):
         for i, batch in enumerate(train_loader):
@@ -525,8 +526,8 @@ def train_loop(
                     rp_lagr_mults += rho * torch.mean(torch.max(rp_limit - payments, -(rp_lagr_mults_tensor/rho_tensor)), dim=0)
             if iter % args.rho_incr_iter == 0:
                 rho = rho * args.rho_incr_amount
-            # if iter % args.rho_incr_iter_ir == 0:
-            #     rho_ir += args.rho_incr_amount_ir
+            if iter % args.rho_incr_iter_ir == 0:
+                rho_ir += args.rho_incr_amount_ir
 
         if epoch % 5 == 4:
             _, _, _, test_result = test_loop(model, test_loader, args, device=device)

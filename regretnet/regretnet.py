@@ -468,7 +468,6 @@ def train_loop(
     lagr_update_iter_ir = args.lagr_update_iter_ir
     lagr_update_iter_rp = args.lagr_update_iter_rp
     rho = args.rho
-    rho_ir = args.rho_ir
 
     for epoch in tqdm(range(args.num_epochs)):
         for i, batch in enumerate(train_loader):

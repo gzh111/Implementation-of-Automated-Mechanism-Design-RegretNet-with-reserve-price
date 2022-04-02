@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="beb0318b-45d6-49ed-a4f1-b25c710c33e8" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/regretnet/regretnet.py" beforeDir="false" afterPath="$PROJECT_DIR$/regretnet/regretnet.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/train.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -159,7 +157,7 @@
       <workItem from="1648367672131" duration="2077000" />
       <workItem from="1648431205982" duration="5151000" />
       <workItem from="1648522729291" duration="3607000" />
-      <workItem from="1648610201017" duration="14196000" />
+      <workItem from="1648610201017" duration="14583000" />
     </task>
     <servers />
   </component>
@@ -243,22 +241,22 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/regretnet/regretnet.py</url>
-          <line>487</line>
+          <line>486</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/regretnet/regretnet.py</url>
-          <line>490</line>
+          <line>489</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/regretnet/regretnet.py</url>
-          <line>501</line>
+          <line>500</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/regretnet/regretnet.py</url>
-          <line>496</line>
+          <line>495</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>

@@ -330,7 +330,12 @@ def calc_rp_loss(model, payments, rp_limit, rp_lagr_mults, rho):
     # edge = torch.zeros(
     #     (1, model.n_agents), device = payments.device)
     ReLU_layer = torch.nn.ReLU()
+    test = rp_lagr_mults + rho * (rp_limit - payments)
+    print(test)
+
     max_rp_operator = ReLU_layer(rp_lagr_mults + rho * (rp_limit - payments))
+
+    print(max_rp_operator)
     # max_rp_operator = torch.max(edge, rp_lagr_mults + rho * (rp_limit - payments))
     rp_decomposed = max_rp_operator**2 - rp_lagr_mults**2
     rp_loss = rp_decomposed.sum(dim=1).mean()
@@ -456,7 +461,7 @@ def train_loop(
 ):
     regret_mults = 5.0 * torch.ones((1, model.n_agents)).to(device)
     ir_lagr_mults = 20.0 * torch.ones((1, model.n_agents)).to(device)
-    rp_lagr_mults = 40.0 * torch.ones((1, model.n_agents)).to(device)
+    rp_lagr_mults = 20.0 * torch.ones((1, model.n_agents)).to(device)
     payment_mult = 1.0
 
     optimizer = optim.Adam(model.parameters(), lr=args.model_lr)
@@ -492,6 +497,7 @@ def train_loop(
             quadratic_regrets = positive_regrets ** 2
             regret_loss = (regret_mults * positive_regrets).mean()
             regret_mean = positive_regrets.mean()
+            print("regret")
             print(regret_mean)
 
 
@@ -504,7 +510,9 @@ def train_loop(
 
             payment_loss = payments.sum(dim=1).mean() * payment_mult
 
+            print("payment_loss")
             print(payment_loss)
+            print("rp_loss")
             print(rp_loss)
 
             loss_func = regret_loss \
@@ -513,6 +521,7 @@ def train_loop(
                         - payment_loss\
                         + (1.0 / (2.0 * rho)) * rp_loss
 
+            print("loss_func")
             print(loss_func)
 
             # 更新网络参数

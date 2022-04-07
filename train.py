@@ -11,7 +11,7 @@ import json
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 parser = ArgumentParser()
-parser.add_argument('--random-seed', type=int, default=0)
+parser.add_argument('--random-seed', type=int, default=12345)
 parser.add_argument('--num-examples', type=int, default=100000)
 parser.add_argument('--test-num-examples', type=int, default=3000)
 parser.add_argument('--n-agents', type=int, default=1)

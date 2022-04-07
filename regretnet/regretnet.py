@@ -464,7 +464,8 @@ def train_loop(
     rp_lagr_mults = 20.0 * torch.ones((1, model.n_agents)).to(device)
     payment_mult = 1.0
 
-    optimizer = optim.Adam(model.parameters(), lr=args.model_lr, amsgrad=True)
+    # optimizer = optim.Adam(model.parameters(), lr=args.model_lr, amsgrad=True)
+    optimizer = optim.SGD(model.parameters(), lr=args.model_lr, nesterov=True)
 
     iter = 0
     reserved_price = args.reserved_price

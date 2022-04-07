@@ -511,6 +511,7 @@ def train_loop(
 
             print("payment_loss", payment_loss)
             print("rp_loss", rp_loss)
+            print("ir_loss", ir_loss)
 
             loss_func = regret_loss \
                         + (rho / 2.0) * torch.mean(quadratic_regrets) \

@@ -497,8 +497,7 @@ def train_loop(
             quadratic_regrets = positive_regrets ** 2
             regret_loss = (regret_mults * positive_regrets).mean()
             regret_mean = positive_regrets.mean()
-            print("regret")
-            print(regret_mean)
+            print("regret", regret_loss)
 
 
             ir_violation = -torch.clamp(truthful_util, max=0)
@@ -510,20 +509,16 @@ def train_loop(
 
             payment_loss = payments.sum(dim=1).mean() * payment_mult
 
-            print("payment_loss")
-            print(payment_loss)
-            print("rp_loss")
-            print(rp_loss)
+            print("payment_loss", payment_loss)
+            print("rp_loss", rp_loss)
 
             loss_func = regret_loss \
                         + (rho / 2.0) * torch.mean(quadratic_regrets) \
                         + ir_loss\
                         - payment_loss\
-                        + (1.0 / (2.0 * rho)) * rp_loss
+                        - (1.0 / (2.0 * rho)) * rp_loss
 
-            print("loss_func")
-            print(loss_func)
-
+            print("loss_func", loss_func)
             # 更新网络参数
             optimizer.zero_grad()
             loss_func.backward()

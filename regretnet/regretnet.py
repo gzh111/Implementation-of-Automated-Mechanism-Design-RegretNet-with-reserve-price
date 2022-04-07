@@ -259,7 +259,7 @@ def create_misreports_bound(valuations, eps=.1):
 
 
 def optimize_misreports(
-    model, current_valuations, current_misreports, misreport_iter=10, lr=1e-1
+    model, current_valuations, current_misreports, misreport_iter=20, lr=1e-2
 ):
     # misreports 和 valuations 的tensor大小相同，初始结果也相同
 
@@ -516,7 +516,7 @@ def train_loop(
                         + (rho / 2.0) * torch.mean(quadratic_regrets) \
                         + ir_loss\
                         - payment_loss\
-                        - (1.0 / (2.0 * rho)) * rp_loss
+                        + (1.0 / (2.0 * rho)) * rp_loss
 
             print("loss_func", loss_func)
             # 更新网络参数

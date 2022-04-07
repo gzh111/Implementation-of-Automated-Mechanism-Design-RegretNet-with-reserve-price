@@ -465,7 +465,7 @@ def train_loop(
     payment_mult = 1.0
 
     # optimizer = optim.Adam(model.parameters(), lr=args.model_lr, amsgrad=True)
-    optimizer = optim.SGD(model.parameters(), lr=args.model_lr, nesterov=True)
+    optimizer = optim.SGD(model.parameters(), lr=args.model_lr, momentum=0.9, dampening=0, nesterov=True)
 
     iter = 0
     reserved_price = args.reserved_price

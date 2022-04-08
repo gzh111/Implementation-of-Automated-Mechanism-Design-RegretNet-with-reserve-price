@@ -464,8 +464,8 @@ def train_loop(
     rp_lagr_mults = 20.0 * torch.ones((1, model.n_agents)).to(device)
     payment_mult = 1.0
 
-    # optimizer = optim.Adam(model.parameters(), lr=args.model_lr, amsgrad=True)
-    optimizer = optim.SGD(model.parameters(), lr=args.model_lr, momentum=0.9, dampening=0, nesterov=True)
+    optimizer = optim.Adam(model.parameters(), lr=args.model_lr, amsgrad=True)
+    # optimizer = optim.SGD(model.parameters(), lr=args.model_lr, momentum=0.9, dampening=0, nesterov=True)
 
     iter = 0
     reserved_price = args.reserved_price
@@ -512,7 +512,6 @@ def train_loop(
 
             print("payment_loss", payment_loss)
             print("rp_loss", rp_loss)
-            print("ir_loss", ir_loss)
 
             loss_func = regret_loss \
                         + (rho / 2.0) * torch.mean(quadratic_regrets) \

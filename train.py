@@ -11,7 +11,7 @@ import json
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 parser = ArgumentParser()
-parser.add_argument('--random-seed', type=int, default=12345)
+parser.add_argument('--random-seed', type=int, default=0)
 parser.add_argument('--num-examples', type=int, default=100000)
 parser.add_argument('--test-num-examples', type=int, default=3000)
 parser.add_argument('--n-agents', type=int, default=1)
@@ -57,7 +57,7 @@ if __name__ == "__main__":
                            comment=f"{args}")
 
 
-    model = RegretNet(args.n_agents, args.n_items, activation='relu', hidden_layer_size=args.hidden_layer_size,
+    model = RegretNet(args.n_agents, args.n_items, activation='tanh', hidden_layer_size=args.hidden_layer_size,
                       n_hidden_layers=args.n_hidden_layers, p_activation=args.p_activation,
                       a_activation=args.a_activation, separate=args.separate).to(DEVICE)
     if args.resume:

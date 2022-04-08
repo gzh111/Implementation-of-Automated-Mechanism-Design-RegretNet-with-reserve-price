@@ -562,9 +562,6 @@ def train_loop(
                         'args': args}
                        , f"result/{args.name}_{epoch}_checkpoint.pt")
 
-        writer.add_scalars('train/stat/regret',
-                           {"max": regrets.max(), "min": regrets.min(), "mean": regrets.mean()},
-                           global_step=epoch)
 
         # 向tensorboard中记录统计数据
         writer.add_scalars('train/stat/regret',

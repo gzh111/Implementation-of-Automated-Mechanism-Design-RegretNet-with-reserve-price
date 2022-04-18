@@ -406,7 +406,7 @@ def test_loop(
 
         truthful_util = calc_agent_util(batch, allocs, payments)
 
-        misreport_allocs, misreport_payments = model(misreport_batch)
+        misreport_allocs, misreport_payments, _ = model(misreport_batch)
         misreport_util = tiled_misreport_util(misreport_batch, batch, model)
 
         regrets = misreport_util - truthful_util

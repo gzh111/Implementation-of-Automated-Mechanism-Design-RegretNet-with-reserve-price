@@ -326,20 +326,22 @@ def tiled_misreport_util(current_misreports, current_valuations, model):
     # agent_utils size [-1, n_agents]
     return agent_utils
 
-def calc_rp_loss(payment_head, batch, allocs, rp_limit, rp_lagr_mults, rho):
+def calc_rp_loss(payments, allocs, rp_limit, rp_lagr_mults, rho):
     # 构建mask计算所有情况下的求和
     # mask = torch.ones(
     #     (1, model.n_agents), device = payments.device)
     # edge = torch.zeros(
     #     (1, model.n_agents), device = payments.device)
-    mask = torch.tensor(allocs < 1e-3)
-    rp_cond_batch = batch.clone().detach()
-    rp_cond_batch.masked_fill(mask, rp_limit[0][0].item())
-    payments_adj = payment_head * torch.sum(
-        allocs * rp_cond_batch, dim=2
-    )
+    mask = torch.tensor(allocs > 1e-3).float()
+    mask_multi = torch.mean(mask, dim=2, keepdim=True)
+    rp_limit_adj = mask_multi * rp_limit
+    # rp_cond_batch = batch.clone().detach()
+    # rp_cond_batch.masked_fill(mask, rp_limit[0][0].item())
+    # payments_adj = payment_head * torch.sum(
+    #     allocs * rp_cond_batch, dim=2
+    # )
     ReLU_layer = torch.nn.ReLU()
-    test = rp_lagr_mults + rho * (rp_limit - payments_adj)
+    test = rp_lagr_mults + rho * (rp_limit_adj - payments)
     print(test)
     max_rp_operator = ReLU_layer(rp_lagr_mults + rho * (rp_limit - payments_adj))
 
@@ -515,7 +517,7 @@ def train_loop(
 
             # 计算losses
             ir_loss = (ir_lagr_mults *(torch.abs(ir_violation)**args.ir_penalty_power)).mean()
-            rp_loss = calc_rp_loss(payment_head, batch, allocs, rp_limit, rp_lagr_mults, rho)
+            rp_loss = calc_rp_loss(payments, allocs, rp_limit, rp_lagr_mults, rho)
 
             payment_loss = payments.sum(dim=1).mean() * payment_mult
 

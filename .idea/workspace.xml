@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="beb0318b-45d6-49ed-a4f1-b25c710c33e8" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/regretnet/regretnet.py" beforeDir="false" afterPath="$PROJECT_DIR$/regretnet/regretnet.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -108,7 +109,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/train.py" />
-      <option name="PARAMETERS" value="--batch-size 200 --num-examples 2000 --name 2x2_softmax_in_scratch --p_activation frac_sigmoid_linear --a_activation sparsemax --num-epochs 20 --rho-incr-amount 0 --n-agents 2 --n-items 2" />
+      <option name="PARAMETERS" value="--batch-size 200 --num-examples 2000 --name 2x2_softmax_in_scratch --p_activation frac_sigmoid_linear --a_activation sparsemax --num-epochs 20 --rho-incr-amount 0 --n-agents 2 --n-items 1" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -161,7 +162,7 @@
       <workItem from="1649065846592" duration="3547000" />
       <workItem from="1649213792092" duration="23487000" />
       <workItem from="1649666090445" duration="3316000" />
-      <workItem from="1650260727851" duration="19965000" />
+      <workItem from="1650260727851" duration="25818000" />
     </task>
     <servers />
   </component>
@@ -177,10 +178,10 @@
       <screen x="0" y="0" width="1493" height="893" />
     </state>
     <state x="657" y="87" key="#test/0.0.1493.893@0.0.1493.893" timestamp="1647573486667" />
-    <state x="457" y="72" key="#train" timestamp="1650283085535">
+    <state x="457" y="72" key="#train" timestamp="1650339923881">
       <screen x="0" y="0" width="1493" height="893" />
     </state>
-    <state x="457" y="72" key="#train/0.0.1493.893@0.0.1493.893" timestamp="1650283085535" />
+    <state x="457" y="72" key="#train/0.0.1493.893@0.0.1493.893" timestamp="1650339923881" />
     <state x="187" y="40" key="CommitChangelistDialog2" timestamp="1647756803772">
       <screen x="0" y="0" width="1493" height="893" />
     </state>
@@ -189,42 +190,42 @@
       <screen x="0" y="0" width="1493" height="893" />
     </state>
     <state x="527" y="188" key="FileChooserDialogImpl/0.0.1493.893@0.0.1493.893" timestamp="1648023391991" />
-    <state width="1450" height="299" key="GridCell.Tab.0.bottom" timestamp="1650289256197">
+    <state width="1450" height="249" key="GridCell.Tab.0.bottom" timestamp="1650337419539">
       <screen x="0" y="0" width="1493" height="893" />
     </state>
-    <state width="1450" height="299" key="GridCell.Tab.0.bottom/0.0.1493.893@0.0.1493.893" timestamp="1650289256197" />
-    <state width="1450" height="299" key="GridCell.Tab.0.center" timestamp="1650289256197">
+    <state width="1450" height="249" key="GridCell.Tab.0.bottom/0.0.1493.893@0.0.1493.893" timestamp="1650337419539" />
+    <state width="1450" height="249" key="GridCell.Tab.0.center" timestamp="1650337419539">
       <screen x="0" y="0" width="1493" height="893" />
     </state>
-    <state width="1450" height="299" key="GridCell.Tab.0.center/0.0.1493.893@0.0.1493.893" timestamp="1650289256197" />
-    <state width="1450" height="299" key="GridCell.Tab.0.left" timestamp="1650289256197">
+    <state width="1450" height="249" key="GridCell.Tab.0.center/0.0.1493.893@0.0.1493.893" timestamp="1650337419539" />
+    <state width="1450" height="249" key="GridCell.Tab.0.left" timestamp="1650337419539">
       <screen x="0" y="0" width="1493" height="893" />
     </state>
-    <state width="1450" height="299" key="GridCell.Tab.0.left/0.0.1493.893@0.0.1493.893" timestamp="1650289256197" />
-    <state width="1450" height="299" key="GridCell.Tab.0.right" timestamp="1650289256197">
+    <state width="1450" height="249" key="GridCell.Tab.0.left/0.0.1493.893@0.0.1493.893" timestamp="1650337419539" />
+    <state width="1450" height="249" key="GridCell.Tab.0.right" timestamp="1650337419539">
       <screen x="0" y="0" width="1493" height="893" />
     </state>
-    <state width="1450" height="299" key="GridCell.Tab.0.right/0.0.1493.893@0.0.1493.893" timestamp="1650289256197" />
-    <state width="1450" height="371" key="GridCell.Tab.1.bottom" timestamp="1650289261557">
+    <state width="1450" height="249" key="GridCell.Tab.0.right/0.0.1493.893@0.0.1493.893" timestamp="1650337419539" />
+    <state width="1450" height="249" key="GridCell.Tab.1.bottom" timestamp="1650337424819">
       <screen x="0" y="0" width="1493" height="893" />
     </state>
-    <state width="1450" height="371" key="GridCell.Tab.1.bottom/0.0.1493.893@0.0.1493.893" timestamp="1650289261557" />
-    <state width="1450" height="371" key="GridCell.Tab.1.center" timestamp="1650289261557">
+    <state width="1450" height="249" key="GridCell.Tab.1.bottom/0.0.1493.893@0.0.1493.893" timestamp="1650337424819" />
+    <state width="1450" height="249" key="GridCell.Tab.1.center" timestamp="1650337424819">
       <screen x="0" y="0" width="1493" height="893" />
     </state>
-    <state width="1450" height="371" key="GridCell.Tab.1.center/0.0.1493.893@0.0.1493.893" timestamp="1650289261557" />
-    <state width="1450" height="371" key="GridCell.Tab.1.left" timestamp="1650289261557">
+    <state width="1450" height="249" key="GridCell.Tab.1.center/0.0.1493.893@0.0.1493.893" timestamp="1650337424819" />
+    <state width="1450" height="249" key="GridCell.Tab.1.left" timestamp="1650337424819">
       <screen x="0" y="0" width="1493" height="893" />
     </state>
-    <state width="1450" height="371" key="GridCell.Tab.1.left/0.0.1493.893@0.0.1493.893" timestamp="1650289261557" />
-    <state width="1450" height="371" key="GridCell.Tab.1.right" timestamp="1650289261557">
+    <state width="1450" height="249" key="GridCell.Tab.1.left/0.0.1493.893@0.0.1493.893" timestamp="1650337424819" />
+    <state width="1450" height="249" key="GridCell.Tab.1.right" timestamp="1650337424819">
       <screen x="0" y="0" width="1493" height="893" />
     </state>
-    <state width="1450" height="371" key="GridCell.Tab.1.right/0.0.1493.893@0.0.1493.893" timestamp="1650289261557" />
-    <state width="754" height="454" key="XDebugger.FullValuePopup" timestamp="1650293803025">
+    <state width="1450" height="249" key="GridCell.Tab.1.right/0.0.1493.893@0.0.1493.893" timestamp="1650337424819" />
+    <state width="754" height="454" key="XDebugger.FullValuePopup" timestamp="1650340172108">
       <screen x="0" y="0" width="1493" height="893" />
     </state>
-    <state width="754" height="454" key="XDebugger.FullValuePopup/0.0.1493.893@0.0.1493.893" timestamp="1650293803025" />
+    <state width="754" height="454" key="XDebugger.FullValuePopup/0.0.1493.893@0.0.1493.893" timestamp="1650340172108" />
     <state x="544" y="364" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1647756853195">
       <screen x="0" y="0" width="1493" height="893" />
     </state>
@@ -271,7 +272,7 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/RegretNet$test.coverage" NAME="test Coverage Results" MODIFIED="1636022463262" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Automated_mechanism_design$test.coverage" NAME="test Coverage Results" MODIFIED="1647572988394" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Implementation_of_Automated_Mechanism_Design_RegretNet_$train.coverage" NAME="train Coverage Results" MODIFIED="1650289256118" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Implementation_of_Automated_Mechanism_Design_RegretNet_$train.coverage" NAME="train Coverage Results" MODIFIED="1650337419466" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Automated_mechanism_design$train.coverage" NAME="train Coverage Results" MODIFIED="1647677146862" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

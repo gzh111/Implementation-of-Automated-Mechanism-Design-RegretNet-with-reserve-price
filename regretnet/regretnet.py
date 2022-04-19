@@ -333,10 +333,7 @@ def calc_rp_loss(payments, allocs, rp_limit, rp_lagr_mults, rho):
     # edge = torch.zeros(
     #     (1, model.n_agents), device = payments.device)
     mask = torch.tensor(allocs > 1e-3).float()
-    print(mask.size())
-    mask_multi = torch.mean(mask, dim=2, keepdim=True)
-    print(mask_multi.size())
-    print(rp_limit.size())
+    mask_multi = torch.mean(mask, dim=2)
     rp_limit_adj = mask_multi * rp_limit
     # rp_cond_batch = batch.clone().detach()
     # rp_cond_batch.masked_fill(mask, rp_limit[0][0].item())

@@ -343,7 +343,7 @@ def calc_rp_loss(payments, allocs, rp_limit, rp_lagr_mults, rho):
     ReLU_layer = torch.nn.ReLU()
     test = rp_lagr_mults + rho * (rp_limit_adj - payments)
     print(test)
-    max_rp_operator = ReLU_layer(rp_lagr_mults + rho * (rp_limit - payments_adj))
+    max_rp_operator = ReLU_layer(rp_lagr_mults + rho * (rp_limit - payments))
 
     print(max_rp_operator)
     # max_rp_operator = torch.max(edge, rp_lagr_mults + rho * (rp_limit - payments))

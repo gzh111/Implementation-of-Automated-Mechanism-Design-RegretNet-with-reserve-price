@@ -396,7 +396,7 @@ def test_loop(
         payments_limit = torch.sum(
             (allocs * batch).view(batch.shape[0], args.n_agents, args.n_items), dim=2
         )
-        payments_adj = torch.where(payments_limit>=payments,
+        payments_adj = torch.where(payments_limit >= payments,
                                    payments,
                                    torch.tensor(0.).to(device))
         rp_adj = torch.where(rp_limit <= payments_adj,
@@ -412,6 +412,11 @@ def test_loop(
         positive_regrets = torch.clamp_min(regrets, 0)
         total_regret += positive_regrets.sum().item() / args.n_agents
         total_regret_sq += (positive_regrets**2).sum().item() / args.n_agents
+
+        rp_violation_mask = torch.tensor(allocs > 1e-3).float()
+        rp_violation_mask_multi = torch.mean(rp_violation_mask, dim=2)
+        rp_limit_adj = rp_violation_mask_multi * rp_limit
+
         for i in range(n_agents):
             total_regret_by_agt[i] += positive_regrets[:, i].sum().item()
             total_regret_sq_by_agt[i] += (positive_regrets[:, i]**2).sum().item()
@@ -425,15 +430,18 @@ def test_loop(
         total_ir_violation += torch.clamp_min(payments - payments_limit, 0).sum().item()
         total_ir_violation_sq += (torch.clamp_min(payments - payments_limit, 0).sum(dim=1)**2).sum().item()
         total_ir_violation_count += (payments > payments_limit).sum().item()
-        total_rp_violation += torch.clamp_min(rp_limit - payments, 0).sum().item()
-        total_rp_violation_sq += (torch.clamp_min(rp_limit - payments, 0).sum(dim=1)**2).sum().item()
-        total_rp_violation_count += (payments < rp_limit).sum().item()
+
+        total_rp_violation += torch.clamp_min(rp_limit_adj - payments, 0).sum().item()
+        total_rp_violation_sq += (torch.clamp_min(rp_limit_adj - payments, 0).sum(dim=1)**2).sum().item()
+        total_rp_violation_count += (payments < rp_limit_adj).sum().item()
+
         if ir_violation_max < torch.clamp_min(payments - payments_limit, 0).max():
             ir_violation_max = torch.clamp_min(payments - payments_limit, 0).max().item()
-        if rp_violation_max < torch.clamp_min(rp_limit - payments, 0).max():
-            rp_violation_max = torch.clamp_min(rp_limit - payments, 0).max().item()
+        if rp_violation_max < torch.clamp_min(rp_limit_adj - payments, 0).max():
+            rp_violation_max = torch.clamp_min(rp_limit_adj - payments, 0).max().item()
         if regret_max < torch.clamp_min(regrets, 0).max():
             regret_max = torch.clamp_min(regrets, 0).max().item()
+
         payment_list.append(total_payment/n_count)
 
     result = {"payment": total_payment / n_count,
@@ -586,7 +594,8 @@ def train_loop(
         writer.add_scalars('loss', {"regret": regret_mean,
                                     "payment": payment_loss,
                                     "ir_violation": ir_loss,
-                                    "rp_violation": rp_loss
+                                    "rp_violation": rp_loss,
+                                    "aggregated_loss": loss_func
                                     }, global_step=epoch)
 
         writer.add_scalars('multiplier', {"regret": regret_mults.mean(),
@@ -603,12 +612,12 @@ def train_loop_ibp(
     device="cpu"
 ):
 
-    lagr_mults = 1.0*torch.ones( (1, model.n_agents)).to(device)
+    lagr_mults = 1.0 * torch.ones((1, model.n_agents)).to(device)
     optimizer = optim.Adam(model.parameters(), lr=args.model_lr)
     epoch_welfare_losses = []
     epoch_pos_regret = []
 
-    iter=0
+    iter = 0
 
     rho = args.rho
     for epoch in tqdm(range(args.num_epochs)):

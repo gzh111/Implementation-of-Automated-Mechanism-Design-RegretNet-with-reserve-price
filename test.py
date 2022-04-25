@@ -54,26 +54,26 @@ if __name__ == "__main__":
     print(pay_result)
 
 
-    # visualize additive utility 1x2 uniform distribution
-    x1 = (2.0 - np.sqrt(2.0)) / 3.0
-    x2 = 2.0 / 3.0
-    points = [(x1, 1.0), (x1, x2), (x2, x1), (x2, 0)]
-    x = list(map(lambda x: x[0], points))
-    y = list(map(lambda x: x[1], points))
-
-    fig, ax = plt.subplots(ncols=1, nrows=1, figsize=(8, 6))
-    plt.plot(x, y, linewidth=2, linestyle='--', c='black')
-
-    img = ax.imshow(alloc[23].detach().numpy()[::1, 0, :], extent=[0, 1, 0, 1], vmin=0.0, vmax=1.0, cmap='YlOrRd')
-
-    plt.text(0.25, 0.25, s='0', color='black', fontsize='10', fontweight='bold')
-    plt.text(0.65, 0.65, s='1', color='black', fontsize='10', fontweight='bold')
-
-    ax.set_xlabel('$v_1$')
-    ax.set_ylabel('$v_2$')
-    plt.title('01 Prob. of allocating item 1')
-    _ = plt.colorbar(img, fraction=0.046, pad=0.04)
-    fig.set_size_inches(4, 3)
-    plt.savefig('alloc1.pdf', bbox_inches='tight', pad_inches=0.05)
+    # # visualize additive utility 1x2 uniform distribution
+    # x1 = (2.0 - np.sqrt(2.0)) / 3.0
+    # x2 = 2.0 / 3.0
+    # points = [(x1, 1.0), (x1, x2), (x2, x1), (x2, 0)]
+    # x = list(map(lambda x: x[0], points))
+    # y = list(map(lambda x: x[1], points))
+    #
+    # fig, ax = plt.subplots(ncols=1, nrows=1, figsize=(8, 6))
+    # plt.plot(x, y, linewidth=2, linestyle='--', c='black')
+    #
+    # img = ax.imshow(alloc[23].detach().numpy()[::1, 0, :], extent=[0, 1, 0, 1], vmin=0.0, vmax=1.0, cmap='YlOrRd')
+    #
+    # plt.text(0.25, 0.25, s='0', color='black', fontsize='10', fontweight='bold')
+    # plt.text(0.65, 0.65, s='1', color='black', fontsize='10', fontweight='bold')
+    #
+    # ax.set_xlabel('$v_1$')
+    # ax.set_ylabel('$v_2$')
+    # plt.title('01 Prob. of allocating item 1')
+    # _ = plt.colorbar(img, fraction=0.046, pad=0.04)
+    # fig.set_size_inches(4, 3)
+    # plt.savefig('alloc1.pdf', bbox_inches='tight', pad_inches=0.05)
 
 

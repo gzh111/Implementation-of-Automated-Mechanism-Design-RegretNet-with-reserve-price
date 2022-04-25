@@ -506,6 +506,9 @@ def train_loop(
             rho_tensor = torch.full((batch.shape[0], args.n_agents), rho).to(device)
             rp_lagr_mults_tensor = torch.full((batch.shape[0], args.n_agents),
                                               rp_lagr_mults[0][0].item()).to(device)
+            rp_violation_mask = torch.tensor(allocs > 1e-3).float()
+            rp_violation_mask_multi = torch.mean(rp_violation_mask, dim=2)
+            rp_limit_adj = rp_violation_mask_multi * rp_limit
 
             truthful_util = calc_agent_util(batch, allocs, payments)
             misreport_util = tiled_misreport_util(misreport_batch, batch, model)
@@ -518,7 +521,7 @@ def train_loop(
 
 
             ir_violation = -torch.clamp(truthful_util, max=0)
-            rp_violation = -torch.clamp(payments - rp_limit, max=0)
+            rp_violation = -torch.clamp(payments - rp_limit_adj, max=0)
 
             # 计算losses
             ir_loss = (ir_lagr_mults *(torch.abs(ir_violation)**args.ir_penalty_power)).mean()
@@ -550,7 +553,7 @@ def train_loop(
                     ir_lagr_mults += rho_ir * torch.mean(torch.abs(ir_violation))
             if iter % lagr_update_iter_rp == 0:
                 with torch.no_grad():
-                    rp_lagr_mults += rho * torch.mean(torch.max(rp_limit - payments, -(rp_lagr_mults_tensor/rho_tensor)), dim=0)
+                    rp_lagr_mults += rho * torch.mean(torch.max(rp_limit_adj - payments, -(rp_lagr_mults_tensor/rho_tensor)), dim=0)
             if iter % args.rho_incr_iter == 0:
                 rho += args.rho_incr_amount
             if iter % args.rho_incr_iter_ir == 0:

@@ -375,6 +375,7 @@ def test_loop(
     regret_max = 0
     n_count = 0
     print(args)
+
     # ouput payments and allocations directly
     payment_tot = []
     alloc_tot = []
@@ -388,10 +389,14 @@ def test_loop(
 
         optimize_misreports(model, batch, misreport_batch, misreport_iter=args.test_misreport_iter, lr=args.misreport_lr)
 
-        allocs, payments, _ = model(batch)
+        allocs, payments = model(batch)
 
         payment_tot.append(payments)
         alloc_tot.append(allocs)
+
+        rp_violation_mask = torch.tensor(allocs > 1e-3).float()
+        rp_violation_mask_multi = torch.mean(rp_violation_mask, dim=2)
+        rp_limit_adj = rp_violation_mask_multi * rp_limit
 
         payments_limit = torch.sum(
             (allocs * batch).view(batch.shape[0], args.n_agents, args.n_items), dim=2
@@ -399,13 +404,13 @@ def test_loop(
         payments_adj = torch.where(payments_limit >= payments,
                                    payments,
                                    torch.tensor(0.).to(device))
-        rp_adj = torch.where(rp_limit <= payments_adj,
+        rp_adj = torch.where(rp_limit_adj <= payments_adj,
                              payments,
                              torch.tensor(0.).to(device))
 
         truthful_util = calc_agent_util(batch, allocs, payments)
 
-        misreport_allocs, misreport_payments, _ = model(misreport_batch)
+        misreport_allocs, misreport_payments = model(misreport_batch)
         misreport_util = tiled_misreport_util(misreport_batch, batch, model)
 
         regrets = misreport_util - truthful_util
@@ -413,9 +418,6 @@ def test_loop(
         total_regret += positive_regrets.sum().item() / args.n_agents
         total_regret_sq += (positive_regrets**2).sum().item() / args.n_agents
 
-        rp_violation_mask = torch.tensor(allocs > 1e-3).float()
-        rp_violation_mask_multi = torch.mean(rp_violation_mask, dim=2)
-        rp_limit_adj = rp_violation_mask_multi * rp_limit
 
         for i in range(n_agents):
             total_regret_by_agt[i] += positive_regrets[:, i].sum().item()
@@ -431,9 +433,9 @@ def test_loop(
         total_ir_violation_sq += (torch.clamp_min(payments - payments_limit, 0).sum(dim=1)**2).sum().item()
         total_ir_violation_count += (payments > payments_limit).sum().item()
 
-        total_rp_violation += torch.clamp_min(rp_limit_adj - payments, 0).sum().item()
-        total_rp_violation_sq += (torch.clamp_min(rp_limit_adj - payments, 0).sum(dim=1)**2).sum().item()
-        total_rp_violation_count += (payments < rp_limit_adj).sum().item()
+        total_rp_violation += torch.clamp_min(rp_limit_adj - rp_adj, 0).sum().item()
+        total_rp_violation_sq += (torch.clamp_min(rp_limit_adj - rp_adj, 0).sum(dim=1)**2).sum().item()
+        total_rp_violation_count += (rp_adj < rp_limit_adj).sum().item()
 
         if ir_violation_max < torch.clamp_min(payments - payments_limit, 0).max():
             ir_violation_max = torch.clamp_min(payments - payments_limit, 0).max().item()
@@ -442,7 +444,7 @@ def test_loop(
         if regret_max < torch.clamp_min(regrets, 0).max():
             regret_max = torch.clamp_min(regrets, 0).max().item()
 
-        payment_list.append(total_payment/n_count)
+        payment_list.append(total_payment_rp_adjusted/n_count)
 
     result = {"payment": total_payment / n_count,
               "payment_ir_adjusted": total_payment_ir_adjusted / n_count,
@@ -501,11 +503,12 @@ def train_loop(
 
             optimize_misreports(model, batch, misreport_batch, misreport_iter=args.misreport_iter, lr=args.misreport_lr)
 
-            allocs, payments, payment_head = model(batch)
+            allocs, payments = model(batch)
 
             rho_tensor = torch.full((batch.shape[0], args.n_agents), rho).to(device)
             rp_lagr_mults_tensor = torch.full((batch.shape[0], args.n_agents),
                                               rp_lagr_mults[0][0].item()).to(device)
+
             rp_violation_mask = torch.tensor(allocs > 1e-3).float()
             rp_violation_mask_multi = torch.mean(rp_violation_mask, dim=2)
             rp_limit_adj = rp_violation_mask_multi * rp_limit
@@ -529,7 +532,6 @@ def train_loop(
 
             payment_loss = payments.sum(dim=1).mean() * payment_mult
 
-            print("payment_loss", payment_loss)
             print("rp_loss", rp_loss)
 
             loss_func = regret_loss \
@@ -598,7 +600,7 @@ def train_loop(
                                     "payment": payment_loss,
                                     "ir_violation": ir_loss,
                                     "rp_violation": rp_loss,
-                                    "aggregated_loss": loss_func
+                                    "aggregated": loss_func
                                     }, global_step=epoch)
 
         writer.add_scalars('multiplier', {"regret": regret_mults.mean(),

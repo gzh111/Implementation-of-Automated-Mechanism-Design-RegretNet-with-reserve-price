@@ -599,7 +599,6 @@ def train_loop(
         writer.add_scalars('loss', {"regret": regret_mean,
                                     "payment": payment_loss,
                                     "ir_violation": ir_loss,
-                                    "rp_violation": rp_loss,
                                     "aggregated": loss_func
                                     }, global_step=epoch)
 

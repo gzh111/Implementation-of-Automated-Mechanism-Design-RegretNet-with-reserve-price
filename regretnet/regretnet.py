@@ -312,7 +312,7 @@ def tiled_misreport_util(current_misreports, current_valuations, model):
         current_misreports, current_valuations
     )
     flatbatch_tiled_misreports = tiled_misreports.view(-1, n_agents, n_items)
-    allocations, payments, _ = model(flatbatch_tiled_misreports)
+    allocations, payments = model(flatbatch_tiled_misreports)
     reshaped_payments = payments.view(
         -1, n_agents, n_agents
     )

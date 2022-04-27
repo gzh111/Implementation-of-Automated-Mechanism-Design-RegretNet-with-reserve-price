@@ -172,7 +172,7 @@ class RegretNet(nn.Module):
         else:
             payments = self.payment_head(x)
 
-        return allocs, payments, self.payment_head(x)
+        return allocs, payments
 
     def interval(self, reports_upper, reports_lower):
         upper = reports_upper.view(-1, self.n_agents * self.n_items)
